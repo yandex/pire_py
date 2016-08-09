@@ -18,9 +18,12 @@ if ! test -r "$srcdir"/bindings/python/pire_wrap.cpp && test x"$CYTHON" = x; the
     AC_MSG_ERROR([[Cython not found (and no prebuilt python wrapper used)]])
 fi
 
-# Just for conscience' sake
 AC_CONFIG_FILES([
-	Makefile
-	pire/Makefile
+    Makefile
+    pire/Makefile
+    pire/tests/Makefile
+    pire/tests/run-pytest
+], [
+    chmod +x pire/tests/run-pytest
 ])
 AC_OUTPUT
