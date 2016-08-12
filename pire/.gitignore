@@ -1,4 +1,5 @@
 impl.pxd
+options.h
 pire_py.pyx
 pire_wrap.cpp
 pire_wrap.h
