@@ -4,9 +4,11 @@ RENDER_PY = $(srcdir)/render.py
 
 MAKO_SOURCES = $(srcdir)/pire_py.pyx.mako $(srcdir)/impl.pxd.mako $(srcdir)/options.h.mako
 CYTHON_SOURCES = $(srcdir)/pire_py.pyx $(srcdir)/impl.pxd $(srcdir)/stub.pxd
-CXX_SOURCES = $(srcdir)/pire_wrap.cpp $(srcdir)/options.h
 
-MAINTAINERCLEANFILES = $(CXX_SOURCES) pire_wrap.h $(CYTHON_SOURCES)
+GENERATED_CXX_SOURCES = $(srcdir)/pire_wrap.cpp $(srcdir)/options.h
+CXX_SOURCES = $(GENERATED_CXX_SOURCES) encoding.h
+
+MAINTAINERCLEANFILES = $(GENERATED_CXX_SOURCES) pire_wrap.h $(CYTHON_SOURCES)
 
 pkgpython_PYTHON =
 pkgpyexec_LTLIBRARIES = pire_py.la
