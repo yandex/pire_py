@@ -3,17 +3,13 @@ AC_DEFUN([AX_PYTHON_INCLUDE], [
 	AC_ARG_VAR([PYTHON_INCLUDE], [Path to directory with python headers])
 	AC_ARG_VAR([PYTHON_CONFIG], [Path to python-config])
 
-	AC_MSG_CHECKING([i am ok])
 	AS_IF([test -z "$PYTHON_INCLUDE"], [
-		AC_MSG_CHECKING([i am ok])
 		AS_IF([test -z "$PYTHON_CONFIG"], [
-			AC_MSG_CHECKING([i am ok])
 			AC_PATH_PROGS(
 				[PYTHON_CONFIG],
 				[python$PYTHON_VERSION-config python-config],
 				[no]
 			)
-			AC_MSG_CHECKING([i am ok])
 			AS_IF([test x"$PYTHON_CONFIG" = xno], [
 				AC_MSG_ERROR([cannot find python-config for $PYTHON.])
 			])
