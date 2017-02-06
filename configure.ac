@@ -14,13 +14,13 @@ AX_PYTHON_INCLUDE
 
 AC_PATH_PROGS([CYTHON], [cython])
 
-if ! test -r "$srcdir"/bindings/python/pire_wrap.cpp; then
+if ! test -r "$srcdir"/pire/pire_wrap.cpp; then
     if test x"$CYTHON" = x; then
         AC_MSG_ERROR([[Cython not found (and no pregenerated extension sources used)]])
     fi
-    if ! test -r "$srcdir"/bindings/python/pire_py.pyx || \
-            ! test -r "$srcdir"/bindings/python/impl.pxd || \
-            ! test -r "$srcdir"/bindings/python/options.h; then
+    if ! test -r "$srcdir"/pire/pire_py.pyx || \
+            ! test -r "$srcdir"/pire/impl.pxd || \
+            ! test -r "$srcdir"/pire/options.h; then
         AX_PYTHON_MODULE([mako], [fatal])
     fi
 fi
