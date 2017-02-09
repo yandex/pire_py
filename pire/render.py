@@ -2,9 +2,9 @@
 """
 Render source files for pire python binding.
 
-The script expects mako template in input file, passes it to mako together with
-fixed set of parameters such as Scanners and operations needed, and writes the
-rendered result to the output file.
+The script expects mako template in input stream (file), passes it to mako
+together with fixed set of parameters such as Scanners and operations needed,
+and writes the rendered result to the output stream (file).
 """
 
 import argparse
@@ -90,12 +90,12 @@ def make_argparser():
     )
     parser.add_argument(
         "-i", "--input",
-        required=True,
+        default="/dev/stdin",
         help="Mako template"
     )
     parser.add_argument(
         "-o", "--output",
-        required=True,
+        default="/dev/stdout",
         help="Path to place the rendered source at"
     )
     return parser
