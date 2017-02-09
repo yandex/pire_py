@@ -63,7 +63,7 @@ MAKO_GLOBALS = {
         "SimpleScanner": ScannerSpec(ignored_methods={"AcceptedRegexps", "Glue"}),
         "SlowScanner": ScannerSpec(
             state_t="yvector[size_t]",
-            ignored_methods={"Glue", "Size", "LettersCount"}
+            ignored_methods={"Glue", "Size", "LettersCount"},
         ),
         "CapturingScanner": ScannerSpec(
             state_t="__nontrivial__",
@@ -91,12 +91,12 @@ def make_argparser():
     parser.add_argument(
         "-i", "--input",
         default="/dev/stdin",
-        help="Mako template"
+        help="Mako template",
     )
     parser.add_argument(
         "-o", "--output",
         default="/dev/stdout",
-        help="Path to place the rendered source at"
+        help="Path to place the rendered source at",
     )
     return parser
 
