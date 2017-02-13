@@ -1,6 +1,7 @@
 # vim: ft=pyrex
 
 from libcpp cimport bool
+from libcpp.unordered_set cimport unordered_set as std_unordered_set
 
 from stub cimport yvector, ypair, yset, ystring, yauto_ptr, yistream, yostream
 
@@ -9,7 +10,7 @@ cdef extern from "pire/pire.h" namespace "Pire" nogil:
     ctypedef int wchar32
 
 
-cdef extern from "encoding.h" namespace "PireBinding" nogil:
+cdef extern from "encoding.h" namespace "Pire::PythonBinding" nogil:
     yvector[wchar32] Utf8ToUcs4(const char* begin, const char* end)
 
 
@@ -155,12 +156,12 @@ cdef extern from "pire/easy.h" namespace "Pire" nogil:
         bool Matches(const char* begin, const char* end)
 
 
-cdef extern from "options.h" namespace "PireBinding" nogil:
+cdef extern from "options.h" namespace "Pire::PythonBinding" nogil:
     cdef enum OptionFlag:
         % for option in OPTIONS:
         ${option}
         % endfor
-    ctypedef yset[OptionFlag] FlagSet
+    ctypedef std_unordered_set[OptionFlag] FlagSet
 
 
     yauto_ptr[Options] ConvertFlagSetToOptions(const FlagSet&)

@@ -4,18 +4,22 @@
 #include "pire/easy.h"
 #include "pire/extra.h"
 
+#include <unordered_set>
 
-namespace PireBinding {
+
+namespace Pire {
+namespace PythonBinding {
+
 enum OptionFlag {
     % for option in OPTIONS:
     ${option},
     % endfor
 };
 
-typedef Pire::yset<OptionFlag> FlagSet;
+typedef std::unordered_set<OptionFlag> FlagSet;
 
-inline Pire::yauto_ptr<Pire::Options> ConvertFlagSetToOptions(const FlagSet& options) {
-    Pire::yauto_ptr<Pire::Options> converted(new Pire::Options());
+inline yauto_ptr<Options> ConvertFlagSetToOptions(const FlagSet& options) {
+    yauto_ptr<Options> converted(new Options());
     % for option, spec in OPTIONS.items():
     if (options.count(${option})) {
         converted->Add(${spec.cpp_getter});
@@ -23,5 +27,6 @@ inline Pire::yauto_ptr<Pire::Options> ConvertFlagSetToOptions(const FlagSet& opt
     % endfor
     return converted;
 }
-}
+}  // PythonBinding
+}  // Pire
 // vim: ft=cpp
