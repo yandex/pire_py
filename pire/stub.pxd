@@ -4,7 +4,7 @@ from libcpp.set cimport set
 from libcpp.string cimport string
 
 
-cdef extern from "sstream" namespace "std":
+cdef extern from "sstream" namespace "std" nogil:
     cdef cppclass istringstream:
         istringstream(const string&)
 
@@ -13,6 +13,8 @@ cdef extern from "sstream" namespace "std":
 
         string GetStr "str"()
 
+
+cdef extern from "memory" namespace "std" nogil:
     cdef cppclass auto_ptr[T]:
         auto_ptr()
 
