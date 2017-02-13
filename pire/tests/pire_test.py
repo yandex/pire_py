@@ -136,6 +136,16 @@ class TestFsm(object):
             rejects=["-", "abc", ""],
         )
 
+    def test_fsm_supports_appending_generated_strings(self, scanner_class):
+        import itertools
+        fsm = pire.Fsm().Append("-")
+        fsm.AppendStrings(itertools.imap(str, ["abc", "de"]))
+        check_scanner(
+            scanner_class(fsm),
+            accepts=["-abc", "-de"],
+            rejects=["-", "abc", ""],
+        )
+
     def test_fsm_raises_when_one_of_appended_strings_is_empty(self):
         fsm = pire.Fsm()
         for invalid_strings in [[""], ["nonempty", ""]]:

@@ -2,6 +2,8 @@
 import copy_reg
 
 cimport cython
+from libcpp.vector cimport vector as std_vector
+from libcpp.string cimport string as std_string
 
 cimport impl
 
@@ -22,6 +24,26 @@ cdef inline const char* begin(bytes line):
 
 cdef inline const char* end(bytes line):
     return (<const char*>line) + len(line)
+
+
+cdef inline impl.ystring make_ystring(bytes line):
+    return impl.ystring(begin(line), len(line))
+
+
+cdef inline impl.yvector[impl.ystring] make_yvector_ystring(strings):
+    cdef impl.yvector[impl.ystring] vec
+    cdef int size
+
+    try:
+        size = len(strings)
+    except:
+        pass
+    else:
+        vec.reserve(size)
+
+    for s in strings:
+        vec.push_back(<impl.ystring>make_ystring(s))
+    return vec
 
 
 cdef inline wrap_fsm(impl.Fsm fsm_impl):
@@ -45,7 +67,7 @@ cdef class Fsm:
         return self.fsm_impl.Size()
 
     def Append(self, bytes line):
-        self.fsm_impl.Append(<impl.ystring>line)
+        self.fsm_impl.Append(make_ystring(line))
         return self
 
     def AppendSpecial(self, impl.Char ch):
@@ -54,7 +76,7 @@ cdef class Fsm:
         return self
 
     def AppendStrings(self, strings):
-        self.fsm_impl.AppendStrings(<impl.yvector[impl.ystring]>strings)
+        self.fsm_impl.AppendStrings(make_yvector_ystring(strings))
         return self
 
     % for unary in FSM_INPLACE_UNARIES:
@@ -170,7 +192,7 @@ cdef class ${Scanner}State(BaseState):
     def AcceptedRegexps(self):
         cdef:
             impl.ypair[const size_t*, const size_t*] span
-            impl.yvector[size_t] regexps
+            std_vector[size_t] regexps
         span = self.scanner.scanner_impl.AcceptedRegexps(self.state_impl)
         regexps.assign(span.first, span.second)
         return regexps
@@ -216,7 +238,7 @@ def _${Scanner}_Load(bytes data not None):
     cdef:
         impl.yauto_ptr[impl.yistream] stream
         impl.${Scanner} loaded_scanner
-    stream.reset(new impl.yistream(data))
+    stream.reset(new impl.yistream(make_ystring(data)))
     loaded_scanner.Load(stream.get())
     return wrap_${Scanner}(loaded_scanner)
 
@@ -246,7 +268,7 @@ cdef class ${Scanner}(BaseScanner):
     def Save(self):
         cdef impl.yostream stream
         self.scanner_impl.Save(&stream)
-        return stream.GetStr()
+        return <std_string>stream.GetStr()
 
     Load = _${Scanner}_Load
 
@@ -363,7 +385,7 @@ cdef class Regexp:
             converted_options = options.Convert()
             self.regexp_impl.reset(
                 new impl.Regexp(
-                    <impl.ystring>pattern,
+                    make_ystring(pattern),
                     cython.operator.dereference(converted_options),
                 )
             )
