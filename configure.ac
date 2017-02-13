@@ -33,8 +33,9 @@ AC_CONFIG_FILES([
     pire/tests/run-pytest
     pire/tests/run-with-pypath
 ], [
-    chmod +x pire/tests/run-bench
-    chmod +x pire/tests/run-pytest
-    chmod +x pire/tests/run-with-pypath
+    chmod --silent +x \
+        pire/tests/run-bench \
+        pire/tests/run-pytest \
+        pire/tests/run-with-pypath
 ])
 AC_OUTPUT
