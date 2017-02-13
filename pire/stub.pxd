@@ -22,7 +22,7 @@ cdef extern from "sstream" namespace "std":
         void reset(T*)
 
 
-cdef extern from "pire/pire.h" namespace "Pire":
+cdef extern from "pire/pire.h" namespace "Pire" nogil:
     ctypedef vector yvector
     ctypedef pair ypair
     ctypedef set yset
@@ -30,6 +30,7 @@ cdef extern from "pire/pire.h" namespace "Pire":
 
     ctypedef auto_ptr yauto_ptr
 
+    ctypedef int wchar32
 
 ctypedef istringstream yistream
 ctypedef ostringstream yostream

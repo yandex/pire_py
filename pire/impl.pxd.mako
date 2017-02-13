@@ -3,11 +3,7 @@
 from libcpp cimport bool
 from libcpp.unordered_set cimport unordered_set as std_unordered_set
 
-from stub cimport yvector, ypair, yset, ystring, yauto_ptr, yistream, yostream
-
-
-cdef extern from "pire/pire.h" namespace "Pire" nogil:
-    ctypedef int wchar32
+from stub cimport yvector, ypair, yset, ystring, yauto_ptr, yistream, yostream, wchar32
 
 
 cdef extern from "encoding.h" namespace "Pire::PythonBinding" nogil:
