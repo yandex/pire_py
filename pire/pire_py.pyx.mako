@@ -32,7 +32,7 @@ cdef inline impl.ystring make_ystring(bytes line):
 
 cdef inline impl.yvector[impl.ystring] make_yvector_ystring(strings):
     cdef impl.yvector[impl.ystring] vec
-    cdef int size
+    cdef Py_ssize_t size
 
     try:
         size = len(strings)
